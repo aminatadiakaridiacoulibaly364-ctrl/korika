@@ -1,0 +1,30 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+/* Thème par défaut (rose) : surchargé par l'admin (Paramètres) puis par les préférences du visiteur. */
+:root {
+  --font-titre: 'Playfair Display'; --font-corps: 'Inter'; --texte-echelle: 100%;
+  --c-creme: #FBEDE8;   /* fond principal : rose pâle */
+  --c-carte: #FFFAF8;   /* cartes : blanc cassé */
+  --c-encre: #2A1A22;   /* texte : aubergine très sombre */
+  --c-nuit: #2A1A22;    /* surfaces sombres : en-tête, pied de page, sections */
+  --c-or: #D56B7F;      /* accent rose soutenu : badges, cadres */
+  --c-or-clair: #E08798;
+  --c-or-fonce: #B84E63;
+}
+html { font-size: var(--texte-echelle, 100%); }
+body { @apply bg-creme text-encre font-corps antialiased; }
+/* Boutons : sombres, arrondis, avec ombre douce (maquette). */
+.btn-or { @apply bg-nuit text-creme font-semibold rounded-full px-6 py-3 shadow-sm transition hover:bg-encre hover:shadow-md active:scale-95; }
+.btn-encre { @apply bg-nuit text-creme font-semibold rounded-full px-6 py-3 shadow-sm transition hover:bg-encre active:scale-95; }
+.card { @apply bg-carte rounded-3xl shadow-sm hover:shadow-lg transition; }
+.fade-in { animation: fade .5s ease both; }
+@keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* Mode sombre : les gris Tailwind passent en tons clairs pour rester lisibles. */
+[data-mode="sombre"] { color-scheme: dark; }
+[data-mode="sombre"] .text-gray-400 { color: #a3949f; }
+[data-mode="sombre"] .text-gray-500 { color: #b4a4b1; }
+[data-mode="sombre"] .text-gray-600 { color: #c8bac5; }
+[data-mode="sombre"] .text-gray-700 { color: #dccfd9; }
+[data-mode="sombre"] .text-gray-800 { color: #ece1ea; }
+[data-mode="sombre"] .bg-carte { background-color: var(--c-carte); }
+[data-mode="sombre"] input, [data-mode="sombre"] select, [data-mode="sombre"] textarea { color-scheme: dark; }

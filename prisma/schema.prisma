@@ -1,0 +1,108 @@
+// Schéma KORIKA FASHION. Fonctionne en SQLite (local) et Postgres/Supabase (production).
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "sqlite" // production Supabase : remplacer par "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String
+  resetToken    String?
+  resetExpires  DateTime?
+  createdAt     DateTime @default(now())
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  image     String?
+  products  Product[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String
+  price       Float
+  promoPrice  Float?
+  images      String   // JSON: tableau d'URLs
+  sizes       String   // JSON: ["S","M","L"]
+  colors      String   // JSON: ["Noir","Doré"]
+  stock       Int      @default(0)
+  featured    Boolean  @default(false)
+  bestseller  Boolean  @default(false)
+  isNew       Boolean  @default(true)
+  visible     Boolean  @default(true)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  orderItems  OrderItem[]
+  createdAt   DateTime @default(now())
+}
+
+model Client {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  phone      String
+  passwordHash String
+  addresses  String   @default("[]") // JSON
+  orders     Order[]
+  createdAt  DateTime @default(now())
+}
+
+model Order {
+  id          String   @id @default(cuid())
+  reference   String   @unique
+  status      String   @default("en_attente") // en_attente|confirmee|en_livraison|livree|annulee
+  fullName    String
+  phone       String
+  city        String
+  district    String
+  address     String
+  deliveryMode String
+  deliveryFee Float    @default(0)
+  paymentMethod String @default("paiement_livraison")
+  notes       String?
+  total       Float
+  clientId    String?
+  client      Client?  @relation(fields: [clientId], references: [id])
+  items       OrderItem[]
+  createdAt   DateTime @default(now())
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  name      String
+  size      String
+  color     String
+  quantity  Int
+  unitPrice Float
+}
+
+model Settings {
+  id           String @id @default("main")
+  storeName    String @default("KORIKA FASHION")
+  logoUrl      String?
+  whatsappNumber String @default("")
+  currency     String @default("FCFA")
+  heroBanners  String @default("[]") // JSON
+  deliveryZones String @default("[]") // JSON: [{"zone":"Abidjan centre","fee":1000}]
+  theme         String @default("{}") // JSON: couleurs du thème {"nuit":"#0d0d0d","or":"#c9a227","orClair":"#e6c65c","orFonce":"#8f7118","creme":"#faf7f2","encre":"#1a1a1a"}
+}
+
+// Photos uploadées depuis l'admin, stockées en base (fonctionne en local ET sur Vercel/Supabase).
+model Media {
+  id         String   @id @default(cuid())
+  mime       String
+  data       String   // base64
+  createdAt  DateTime @default(now())
+}
