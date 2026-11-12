@@ -40,7 +40,9 @@ export default function Produits() {
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault(); setMsg('');
-    const body = { ...form, price: Number(form.price), promoPrice: form.promoPrice ? Number(form.promoPrice) : null, stock: Number(form.stock) };
+    const body = { ...form, price: Number(form.price), promoPrice: form.promoPrice ? Number(form.promoPrice) : null, stock: Number(form.stock),
+      sizes: String(form.sizes).split(',').map((s: string) => s.trim()).filter(Boolean),
+      colors: String(form.colors).split(',').map((s: string) => s.trim()).filter(Boolean) };
     const res = await fetch(editing ? '/api/products/' + form.id : '/api/products', { method: editing ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     if (!res.ok) return setMsg('Erreur lors de l\'enregistrement.');
     setForm(empty); setEditing(false); setMsg(editing ? 'Produit modifié.' : 'Produit ajouté.'); load();
