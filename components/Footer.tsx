@@ -1,5 +1,5 @@
 import Link from 'next/link';
-export default function Footer({ storeName, whatsapp }: { storeName: string; whatsapp?: string }) {
+export default function Footer({ storeName, whatsapp, contactEmail, pickupAddress }: { storeName: string; whatsapp?: string; contactEmail?: string; pickupAddress?: string }) {
   return (
     <footer className="mt-16 bg-nuit text-creme">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3">
@@ -16,6 +16,8 @@ export default function Footer({ storeName, whatsapp }: { storeName: string; wha
         <div className="text-sm">
           <p className="mb-2 font-semibold">Contact</p>
           {whatsapp && <p>WhatsApp : +{whatsapp}</p>}
+          {contactEmail && <p>E-mail : <a href={`mailto:${contactEmail}`} className="hover:text-or">{contactEmail}</a></p>}
+          {pickupAddress && <p>Retrait en boutique : {pickupAddress}</p>}
           <div className="mt-3 flex gap-4 text-creme/70">
             <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">Instagram</a>
             <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">Facebook</a>

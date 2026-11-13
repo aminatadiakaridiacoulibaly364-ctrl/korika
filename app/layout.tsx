@@ -47,7 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <CartProvider>
             <Header storeName={storeName} logoUrl={settings?.logoUrl || undefined} />
             <main className="min-h-[70vh]">{children}</main>
-            <Footer storeName={storeName} whatsapp={settings?.whatsappNumber} />
+            <Footer storeName={storeName} whatsapp={settings?.whatsappNumber} contactEmail={settings?.contactEmail} pickupAddress={settings?.pickupAddress} />
             <WhatsAppButton number={settings?.whatsappNumber || ''} />
           </CartProvider>
         </ThemeProvider>

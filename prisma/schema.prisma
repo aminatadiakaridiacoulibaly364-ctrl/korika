@@ -96,6 +96,8 @@ model Settings {
   currency     String @default("FCFA")
   heroBanners  String @default("[]") // JSON
   deliveryZones String @default("[]") // JSON: [{"zone":"Abidjan centre","fee":1000}]
+  contactEmail String @default("")
+  pickupAddress String @default("")
   theme         String @default("{}") // JSON: couleurs du thème {"nuit":"#0d0d0d","or":"#c9a227","orClair":"#e6c65c","orFonce":"#8f7118","creme":"#faf7f2","encre":"#1a1a1a"}
 }
 

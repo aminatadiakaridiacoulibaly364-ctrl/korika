@@ -61,6 +61,10 @@ export default function Parametres() {
             <input value={s.logoUrl || ''} onChange={e => setS({ ...s, logoUrl: e.target.value })} className={f} /></label>
           <label className="text-sm">Numéro WhatsApp (avec indicatif, sans + ni espaces)
             <input value={s.whatsappNumber || ''} onChange={e => setS({ ...s, whatsappNumber: e.target.value })} placeholder="2250700000000" className={f} /></label>
+          <label className="text-sm">E-mail de contact
+            <input value={s.contactEmail || ''} onChange={e => setS({ ...s, contactEmail: e.target.value })} placeholder="contact@korika.com" className={f} /></label>
+          <label className="text-sm">Adresse de retrait en boutique
+            <input value={s.pickupAddress || ''} onChange={e => setS({ ...s, pickupAddress: e.target.value })} placeholder="1 rue de Valmy, Sebenikoro, Bamako" className={f} /></label>
           <label className="text-sm">Devise
             <input value={s.currency || ''} onChange={e => setS({ ...s, currency: e.target.value })} className={f} /></label>
           <label className="text-sm md:col-span-2">Bannières de la page d'accueil (JSON : tableau de {`{ title, subtitle, image }`})

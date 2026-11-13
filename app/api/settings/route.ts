@@ -13,7 +13,7 @@ export async function PUT(req: Request) {
   if (!admin) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
   const b = await req.json();
   const data: any = {};
-  for (const k of ['storeName', 'logoUrl', 'whatsappNumber', 'currency']) if (b[k] !== undefined) data[k] = b[k];
+  for (const k of ['storeName', 'logoUrl', 'whatsappNumber', 'currency', 'contactEmail', 'pickupAddress']) if (b[k] !== undefined) data[k] = b[k];
   if (b.heroBanners) data.heroBanners = JSON.stringify(b.heroBanners);
   if (b.deliveryZones) data.deliveryZones = JSON.stringify(b.deliveryZones);
   if (b.theme) data.theme = JSON.stringify(b.theme);
